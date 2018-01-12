@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title></title>
+		<link href = "/styles.css" rel="stylesheet" type="text/css" />
+		<link href= "https://fonts.googleapis.com/css?family=Mukta" rel:"sytlesheet" />
+
+	</head>
+	<body>
+		<h1 class= "title">Things with friends-<br> first model for appliance REST API</h1>
+		<div id= "homepage">
+			<h1> Use this to find appliance people nearby</h1>
+		<div id= "things"></div>
+		</div>
+		
+		<script src= "https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+		<script src= "https://unpkg.com/react@15/dist/react.js"></script>
+		<script src = "https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+		<!-- For the react Component-->
+		<script type="text/babel">
+				var Things = React.createClass({
+			getInitialState: function(){
+			return({
+			things: []
+			});
+			},
+			render: function(){
+			var things = this.state.things;
+			things = things.map(function(thing, index){
+				return(
+				<li key ={index}>
+					<span className={thing.obj.working}></span>
+					<span className="name">{thing.obj.name}</span>
+					<span className="number">{thing.obj.number}</span>
+					<span className="dist">{Math.floor(thing.dis/1000)} km</span>
+				</li>
+				);
+			});
+			return(
+			<div id= "thing-container">
+				<form id= "search" onSubmit={this.handleSubmit}>
+					<label>Input latitude:</label>
+					<input type="text" ref= "lat" placeholder= "latitude" required/>
+					<label>Input longitude:</label>
+					<input type="text" ref= "lng" placeholder= "longitude" required/>
+					<input type="submit" value= "Find people"/>
+				</form>
+				<ul>{things}</ul>
+			</div>
+			);
+		},
+			handleSubmit: function(e){
+				e.preventDefault();
+				var lng = this.refs.lng.value;
+				var lat = this.refs.lat.value;
+				
+				fetch('/api/things?lng=' + lng + '&lat=' + lat).then(function(data){
+					return data.json();
+				}).then( json => {
+				this.setState({
+					things: json
+				});
+				console.log(json);
+			});
+		}
+	});
+		
+	ReactDOM.render(<Things/>, document.getElementById('things'));
+	</script>
+		
+	</body>
+</html>
