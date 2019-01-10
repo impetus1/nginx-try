@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 //connect to mongo
-mongoose.connect('mongodb://ffap:password@ds141534.mlab.com:41534/mern_stack', {useMongoClient: true});
+mongoose.connect('mongodb://ffap2:Passw0rd1@ds141534.mlab.com:41534/mern_stack', {useMongoClient: true});
 mongoose.Promise = global.Promise;
 
 //to serve public stuff
