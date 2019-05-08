@@ -18,6 +18,7 @@
 		<script src= "https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 		<script src= "https://unpkg.com/react@15/dist/react.js"></script>
 		<script src = "https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 		<!-- For the react Component-->
 		<script type="text/babel">
 				var Things = React.createClass({
@@ -48,6 +49,7 @@
 					<input type="submit" value= "Find people"/>
 				</form>
 				<ul>{things}</ul>
+				<ul>{PlacesAutocomplete}</ul>
 			</div>
 			);
 		},
@@ -67,7 +69,12 @@
 		}
 	});
 		
-	ReactDOM.render(<Things/>, document.getElementById('things'));
+	ReactDOM.render(<Things/>, <PlacesAutocomplete
+  value={this.state.value}
+  onChange={value => this.setState({ value })}
+>
+  {/* custom render function */}
+</PlacesAutocomplete>, document.getElementById('things'));
 	</script>
 		
 	</body>
